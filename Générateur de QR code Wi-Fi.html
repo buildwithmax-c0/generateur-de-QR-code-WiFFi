@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>WiFi Card Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    input { margin: 10px 0; padding: 8px; width: 100%%; }
+    button { padding: 10px 20px; }
+    #qrcode { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>WiFi Card Generator</h1>
+  <label>Nom du réseau (SSID):</label><br>
+  <input type="text" id="ssid"><br>
+  <label>Mot de passe:</label><br>
+  <input type="text" id="password"><br>
+  <button onclick="generateQRCode()">Print Wifi Card</button>
+  <div id="qrcode"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    function generateQRCode() {
+      const ssid = document.getElementById('ssid').value;
+      const password = document.getElementById('password').value;
+      const qrData = `WIFI:T:WPA;S:${ssid};P:${password};;`;
+      document.getElementById('qrcode').innerHTML = "";
+      QRCode.toCanvas(document.createElement('canvas'), qrData, function (error, canvas) {
+        if (error) console.error(error);
+        document.getElementById('qrcode').appendChild(canvas);
+      });
+    }
+  </script>
+</body>
+</html>
